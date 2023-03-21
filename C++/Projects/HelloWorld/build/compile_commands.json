@@ -1,0 +1,7 @@
+[
+{
+  "directory": "D:/Git/OpenglLearn/C++/Projects/HelloWorld/build",
+  "command": "D:\\OpenglLearn\\C++\\MinGW\\x86_64-8.1.0-release-win32-seh-rt_v6-rev0\\mingw64\\bin\\g++.exe    -g   -o CMakeFiles\\helloworld.dir\\helloworld.cpp.obj -c D:\\Git\\OpenglLearn\\C++\\Projects\\HelloWorld\\helloworld.cpp",
+  "file": "D:/Git/OpenglLearn/C++/Projects/HelloWorld/helloworld.cpp"
+}
+]

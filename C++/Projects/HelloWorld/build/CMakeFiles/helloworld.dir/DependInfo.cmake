@@ -4,8 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "D:/Git/OpenglLearn/C++/Projects/HelloWorld/helloworld.cpp" "D:/Git/OpenglLearn/C++/Projects/HelloWorld/build/CMakeFiles/helloworld.dir/D_/Git/OpenglLearn/C++/Projects/HelloWorld/helloworld.cpp.obj"
-  "D:/Git/OpenglLearn/C++/Projects/HelloWorld/printtest.cpp" "D:/Git/OpenglLearn/C++/Projects/HelloWorld/build/CMakeFiles/helloworld.dir/D_/Git/OpenglLearn/C++/Projects/HelloWorld/printtest.cpp.obj"
+  "D:/Git/OpenglLearn/C++/Projects/HelloWorld/helloworld.cpp" "D:/Git/OpenglLearn/C++/Projects/HelloWorld/build/CMakeFiles/helloworld.dir/helloworld.cpp.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

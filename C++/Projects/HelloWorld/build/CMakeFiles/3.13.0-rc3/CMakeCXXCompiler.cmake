@@ -1,4 +1,4 @@
-set(CMAKE_CXX_COMPILER "D:/OpenglLearn/C++/MinGW/x86_64-8.1.0-release-win32-seh-rt_v6-rev0/mingw64/bin/c++.exe")
+set(CMAKE_CXX_COMPILER "D:/OpenglLearn/C++/MinGW/x86_64-8.1.0-release-win32-seh-rt_v6-rev0/mingw64/bin/g++.exe")
 set(CMAKE_CXX_COMPILER_ARG1 "")
 set(CMAKE_CXX_COMPILER_ID "GNU")
 set(CMAKE_CXX_COMPILER_VERSION "8.1.0")
