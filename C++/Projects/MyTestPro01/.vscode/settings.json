@@ -1,0 +1,8 @@
+{
+    "C_Cpp.dimInactiveRegions": false,
+    "files.associations": {
+        "glad.h": "c",
+        "iostream": "cpp"
+    },
+    "C_Cpp.errorSquiggles": "disabled"
+}
