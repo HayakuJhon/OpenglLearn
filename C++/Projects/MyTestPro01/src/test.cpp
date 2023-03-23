@@ -1,6 +1,6 @@
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
-#include <glad/glad.h>
 // 设置窗口尺寸
 const unsigned int SCR_WIDTH = 400;
 const unsigned int SCR_HEIGHT = 300;
