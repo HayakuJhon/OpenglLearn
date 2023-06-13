@@ -39,11 +39,8 @@ int main() {
 		return -1;
 	}
 
-	/*TCHAR NPath[MAX_PATH];
-	GetCurrentDirectory(MAX_PATH, NPath);
-	std::cout << NPath << std::endl;
+	//std::ofstream ct; ct.open("bla.txt"); ct << "klaf";	//用来确认运行目录，会在运行目录生成一个bla.txt文件
 
-	std::cout << std::filesystem::current_path().string() << std::endl;*/
 	/*const std::string vsFile = "shader.vs";
 	const std::string fsFile = "shader.fs";*/
 	//Shader shader(vsFile.c_str(), fsFile.c_str());
@@ -53,7 +50,6 @@ int main() {
 	glGenBuffers(1,&VBO);
 	std::cout << VBO << "," << &VBO << std::endl;
 
-	//std::ofstream ct; ct.open("bla.txt"); ct << "klaf";
 
 	while (!glfwWindowShouldClose(window))
 	{

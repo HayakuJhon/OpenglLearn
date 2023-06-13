@@ -80,10 +80,10 @@ public:
 		}
 		// shader Program
 		ID = glCreateProgram();
-		glAttachShader(ID, vertex);
-		glAttachShader(ID, fragment);
+		glAttachShader(ID, vertex);	//给着色器程序附加顶点着色器
+		glAttachShader(ID, fragment);	//给着色器程序附加片段着色器
 		if (geometryPath != NULL) {
-			glAttachShader(ID, geometry);
+			glAttachShader(ID, geometry);	//给着色器程序附加几何着色器
 		}
 		glLinkProgram(ID);
 		checkCompileErrors(ID, "PROGRAM");
