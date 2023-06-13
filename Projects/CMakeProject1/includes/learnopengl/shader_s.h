@@ -15,6 +15,7 @@ class Shader
 public:
 	unsigned int ID;
 	Shader(const char* vertexPath, const char* fragmentPath, const char* geometryPath = nullptr) {
+		// 1. retrieve the vertex/fragment source code from filePath
 		std::string vertexCode;
 		std::string fragmentCode;
 		std::string geometryCode;
@@ -22,20 +23,22 @@ public:
 		std::ifstream fShaderFile;
 		std::ifstream gShaderFile;
 
+		// ensure ifstream objects can throw exceptions:
 		vShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 		fShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 		gShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 		try {
+			// open files  相对运行时的路径，或者绝对路径
 			vShaderFile.open(vertexPath);
 			fShaderFile.open(fragmentPath);
 			std::stringstream vShaderStream, fShaderStream;
-
+			// read file's buffer contents into streams
 			vShaderStream << vShaderFile.rdbuf();
 			fShaderStream << fShaderFile.rdbuf();
-
+			// close file handlers
 			vShaderFile.close();
 			fShaderFile.close();
-
+			// convert stream into string
 			vertexCode = vShaderStream.str();
 			fragmentCode = fShaderStream.str();
 
@@ -51,21 +54,22 @@ public:
 			std::cout << "ERROR::SHADER::FILE_NOT_SUCCESSFULLY_READ: " << e.what() << std::endl;
 			std::cerr << "Error:" << strerror(errno);
 		}
+		//convert string into char*
 		const char* vShaderCode = vertexCode.c_str();
 		const char* fShaderCode = fragmentCode.c_str();
-
+		// 2. compile shaders
 		unsigned int vertex, fragment;
-
+		// vertex shader
 		vertex = glCreateShader(GL_VERTEX_SHADER);
 		glShaderSource(vertex, 1, &vShaderCode, NULL);
 		glCompileShader(vertex);
 		checkCompileErrors(vertex, "VERTEX");
-
+		// fragment Shader
 		fragment = glCreateShader(GL_FRAGMENT_SHADER);
 		glShaderSource(fragment, 1, &fShaderCode, NULL);
 		glCompileShader(fragment);
 		checkCompileErrors(fragment, "FRAGMENT");
-
+		// geometry Shader
 		unsigned geometry;
 		if (geometryPath != NULL) {
 			const char* gShaderCode = geometryCode.c_str();
@@ -74,7 +78,7 @@ public:
 			glCompileShader(geometry);
 			checkCompileErrors(geometry, "GEOMETRY");
 		}
-
+		// shader Program
 		ID = glCreateProgram();
 		glAttachShader(ID, vertex);
 		glAttachShader(ID, fragment);
@@ -83,18 +87,20 @@ public:
 		}
 		glLinkProgram(ID);
 		checkCompileErrors(ID, "PROGRAM");
-
+		// delete the shaders as they're linked into our program now and no longer necessary 标识删除，当不再被使用时会被删除
 		glDeleteShader(vertex);
 		glDeleteShader(fragment);
 		if (geometryPath != NULL) {
 			glDeleteShader(geometry);
 		}
 	}
-
+	// activate the shader
+	// ------------------------------------------------------------------------
 	void use() {
 		glUseProgram(ID);
 	}
-
+	// utility uniform functions
+	// ------------------------------------------------------------------------
 	void setBool(const std::string& name, bool value)const {
 		glUniform1i(glGetUniformLocation(ID, name.c_str()), (int)value);
 	}
@@ -144,6 +150,8 @@ public:
 	}
 
 private:
+	// utility function for checking shader compilation/linking errors.
+	// ------------------------------------------------------------------------
 	void checkCompileErrors(GLuint shader, std::string type) {
 		GLint success;
 		GLchar infoLog[1024];
