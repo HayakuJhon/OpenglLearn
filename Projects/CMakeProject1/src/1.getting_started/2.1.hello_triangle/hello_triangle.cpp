@@ -46,10 +46,19 @@ int main() {
 	//Shader shader(vsFile.c_str(), fsFile.c_str());
 	Shader shader("shader.vs", "shader.fs");
 
-	unsigned int VBO;//vertex buffer object
-	glGenBuffers(1,&VBO);
+	//OpenGL的核心模式要求我们使用VAO，所以它知道该如何处理我们的顶点输入。如果我们绑定VAO失败，OpenGL会拒绝绘制任何东西。
+	unsigned int VBO, VAO;//vertex buffer object
+	glGenVertexArrays(1, &VAO);	//定义VAO（顶点数组对象）
+	glGenBuffers(1,&VBO);	//定义VBO（顶点缓冲对象）
+	glBindVertexArray(VAO);	//先绑定VAO，再绑定VBO和配置VBO的读取规则等
 	std::cout << VBO << "," << &VBO << std::endl;
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);	//绑定VBO到目标GL_ARRAY_BUFFER类型上
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);	//将顶点数据输入到当前绑定在GL_ARRAY_BUFFER上的VBO上
 
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);	//配置读取VBO顶点数据的规则
+	glEnableVertexAttribArray(0);	//启用当前绑定的VAO，默认所有的都是禁用的
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);	//解绑当前绑定在GL_ARRAY_BUFFER上的VBO
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -58,8 +67,12 @@ int main() {
 		glClearColor(0.2, 0.3, 0.3, 1);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		glfwSwapBuffers(window);
-		glfwPollEvents();
+		shader.use();
+		glBindVertexArray(VAO);	//绑定当前需要用到的VAO，当只有一个的时候可以不用再次绑定
+		glDrawArrays(GL_TRIANGLES, 0, 3);
+
+		glfwSwapBuffers(window);	//交换屏幕渲染buffer和GPU内存中的buffer
+		glfwPollEvents();	//抛出窗口事件
 	}
 	glfwTerminate();
 	return 0;
