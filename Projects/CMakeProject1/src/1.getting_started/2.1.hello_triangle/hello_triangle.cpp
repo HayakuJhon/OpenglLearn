@@ -45,6 +45,7 @@ int main() {
 	const std::string fsFile = "shader.fs";*/
 	//Shader shader(vsFile.c_str(), fsFile.c_str());
 	Shader shader("shader.vs", "shader.fs");
+	shader.use();
 
 	//OpenGL的核心模式要求我们使用VAO，所以它知道该如何处理我们的顶点输入。如果我们绑定VAO失败，OpenGL会拒绝绘制任何东西。
 	unsigned int VBO, VAO;//vertex buffer object
@@ -67,7 +68,6 @@ int main() {
 		glClearColor(0.2, 0.3, 0.3, 1);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		shader.use();
 		glBindVertexArray(VAO);	//绑定当前需要用到的VAO，当只有一个的时候可以不用再次绑定
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 
