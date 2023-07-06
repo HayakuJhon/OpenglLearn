@@ -56,6 +56,7 @@ set(1.getting_started
     1.2.hello_window
     2.1.hello_triangle
     2.2.hello_triangle_indexed
+    3.1.uniform
 )
 
 
