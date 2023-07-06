@@ -28,6 +28,10 @@ int main() {
 		return -1;
 	}
 
+	int nrAttributes;
+	glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes);
+	std::cout << "Maximum nr of vertex attributes supported: " << nrAttributes << std::endl;
+
 	//float vertices[] = {
 	//	0.5f,  0.5f, 0.0f,  // top right
 	//	0.5f, -0.5f, 0.0f,  // bottom right
@@ -53,8 +57,8 @@ int main() {
 		0, 1, 2   // second Triangle
 	};
 
-	Shader shader("shader.vs", "shader.fs");
-	Shader shader1("shader.vs", "shader2.fs");
+	Shader shader("2.2.shader.vs", "2.2.shader.fs");
+	Shader shader1("2.2.shader.vs", "2.2.shader2.fs");
 	//shader.use();
 	/*unsigned int VBO, VAO, EBO;
 	glGenBuffers(1, &VBO);
@@ -73,6 +77,7 @@ int main() {
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);*/
 
+	//shader.use();
 	unsigned int VBO1, VBO2, VAO1,VAO2, EBO;
 	glGenBuffers(1, &VBO1);
 	glGenVertexArrays(1, &VAO1);
@@ -80,9 +85,11 @@ int main() {
 	glBindBuffer(GL_ARRAY_BUFFER, VBO1);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices1), vertices1, GL_STATIC_DRAW);
 
+	//unsigned int location = glGetAttribLocation(shader.ID, "aPos");	//可以通过glGetAttribLocation获取到属性的地址，也可以在vs中通过layout设置，再直接使用
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
+	//shader1.use();
 	glGenBuffers(1, &VBO2);
 	glGenVertexArrays(1, &VAO2);
 	glBindVertexArray(VAO2);
@@ -95,6 +102,10 @@ int main() {
 
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
+
+	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 
 	while (!glfwWindowShouldClose(window))
@@ -116,6 +127,14 @@ int main() {
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
+
+	glDeleteVertexArrays(1, &VAO1);
+	glDeleteVertexArrays(1, &VAO2);
+	glDeleteBuffers(1, &VBO1);
+	glDeleteBuffers(1, &VBO2);
+	glDeleteBuffers(1, &EBO);
+
+	glfwTerminate();
 	return 0;
 }
 

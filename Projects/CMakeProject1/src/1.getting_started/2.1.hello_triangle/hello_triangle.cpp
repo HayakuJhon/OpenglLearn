@@ -44,7 +44,7 @@ int main() {
 	/*const std::string vsFile = "shader.vs";
 	const std::string fsFile = "shader.fs";*/
 	//Shader shader(vsFile.c_str(), fsFile.c_str());
-	Shader shader("shader.vs", "shader.fs");
+	Shader shader("1.1.shader.vs", "1.1.shader.fs");
 	shader.use();
 
 	//OpenGL的核心模式要求我们使用VAO，所以它知道该如何处理我们的顶点输入。如果我们绑定VAO失败，OpenGL会拒绝绘制任何东西。
@@ -74,6 +74,8 @@ int main() {
 		glfwSwapBuffers(window);	//交换屏幕渲染buffer和GPU内存中的buffer
 		glfwPollEvents();	//抛出窗口事件
 	}
+	glDeleteVertexArrays(1, &VAO);
+	glDeleteBuffers(1, &VBO);
 	glfwTerminate();
 	return 0;
 }
