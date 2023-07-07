@@ -57,6 +57,7 @@ set(1.getting_started
     2.1.hello_triangle
     2.2.hello_triangle_indexed
     3.1.uniform
+    3.2.more_attrib
 )
 
 
