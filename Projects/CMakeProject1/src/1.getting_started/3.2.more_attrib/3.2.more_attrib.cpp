@@ -2,6 +2,7 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include <learnopengl/shader_s.h>
+#include <glm/glm.hpp>
 
 const unsigned int WINDOW_WIDTH = 800;
 const unsigned int WINDOW_HEIGHT = 800;
@@ -34,6 +35,11 @@ int main() {
 		-0.5f,0.0f,0.0f,0.0f,0.0f,1.0f
 	};
 
+	/*float offset[] = {
+		0.5f,0.5f,0.0f
+	};*/
+	glm::vec3 offset = glm::vec3(0.5f, 0.5f, 0.0f);
+
 	Shader shader("3.2.shader.vs", "3.2.shader.fs");
 
 	unsigned int VBO, VAO;
@@ -61,6 +67,12 @@ int main() {
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
+		double time = glfwGetTime();
+		float x = glm::sin(time) / 2;
+		float y = glm::cos(time) * 3 / 4 - 0.25f;
+		offset.x = x;
+		offset.y = y;
+		shader.setVec3("offset", offset);
 		glBindVertexArray(VAO);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 
