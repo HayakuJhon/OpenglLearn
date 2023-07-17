@@ -58,6 +58,7 @@ set(1.getting_started
     2.2.hello_triangle_indexed
     3.1.uniform
     3.2.more_attrib
+    4.1.textures
 )
 
 
@@ -68,6 +69,8 @@ set(1.getting_started
 message(STATUS "========${CMAKE_BINARY_DIR}")
 configure_file(configuration/root_directory.h.in configuration/root_directory.h)
 include_directories(${CMAKE_BINARY_DIR}/configuration)
+add_library(STB_IMAGE "src/stb_image.cpp")
+set(LIBS ${LIBS} STB_IMAGE)
 
 add_library(GLAD "src/glad.c")
 set(LIBS ${LIBS} GLAD)
