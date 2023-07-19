@@ -16,6 +16,8 @@ const unsigned int TEXTURE_HEIGHT = 512;
 void processInput(GLFWwindow* window);
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
+float mixRate = 0;
+
 int main() {
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -150,6 +152,7 @@ int main() {
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, texture2);
 		shader.use();
+		glUniform1f(glGetUniformLocation(shader.ID, "mixRate"), mixRate);
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
@@ -168,6 +171,14 @@ int main() {
 void processInput(GLFWwindow* window) {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 		glfwSetWindowShouldClose(window, true);
+	}
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+		mixRate += 0.05;
+		mixRate = std::min(1.0f, mixRate);
+	}
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+		mixRate -= 0.05;
+		mixRate = std::max(0.0f, mixRate);
 	}
 }
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
