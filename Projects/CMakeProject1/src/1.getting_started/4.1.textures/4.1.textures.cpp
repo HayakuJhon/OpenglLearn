@@ -54,13 +54,7 @@ int main() {
 	
 
 	Shader shader("4.1.shader.vs", "4.1.shader.fs");
-	unsigned int texture,VBO,VAO,EBO;
-	glGenTextures(1, &texture);
-	glBindTexture(GL_TEXTURE_2D, texture);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	unsigned int VBO,VAO,EBO;
 	
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
@@ -87,24 +81,61 @@ int main() {
 	
 	
 
+	unsigned int texture1,texture2;
+	//texture1
+	glGenTextures(1, &texture1);	//创建纹理对象（只是一个对象，不需要和纹理单元匹配上
+	//glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture1);	//绑定纹理对象，用以配置纹理对象
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	stbi_set_flip_vertically_on_load(true);
 	int channel, width, height;
 	//std::cout << FileSystem::getPath("resources/textures/container").c_str() << std::endl;
 	unsigned char* data = stbi_load(FileSystem::getPath("resources/textures/container.jpg").c_str(), &width, &height, &channel, 0);
 	if (data) {
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);	//通过图片数据生成一个纹理到纹理对象中
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 	else
 	{
 		std::cout << "Failed to load texture" << std::endl;
 	}
+	stbi_image_free(data);
 
+	//texture2
+	glGenTextures(1, &texture2);
+	//glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, texture2);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	int width1, height1, channel1;
+	unsigned char* data1 = stbi_load(FileSystem::getPath("resources/textures/awesomeface.png").c_str(), &width1, &height1, &channel1, 0);
+	if (data1) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width1, height1, 0, GL_RGBA, GL_UNSIGNED_BYTE, data1);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+	{
+		std::cout << "Fail to load texture1" << std::endl;
+	}
+	stbi_image_free(data1);
 
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-	stbi_image_free(data);
+	
+	shader.use();	//更新uniform时需要激活着色器，在激活的着色器中更新
+	//glActiveTexture(GL_TEXTURE0);
+	glUniform1i(glGetUniformLocation(shader.ID, "textureSampler"), 0);	//此处设置了uniform变量所要取的纹理单元？
+	//glActiveTexture(GL_TEXTURE1);
+	shader.setInt("textureSampler1", 1);
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -112,7 +143,10 @@ int main() {
 
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
-		glBindTexture(GL_TEXTURE_2D, texture);
+		glActiveTexture(GL_TEXTURE0);	//激活TEXTURE0纹理单元
+		glBindTexture(GL_TEXTURE_2D, texture1);	//绑定纹理对象到激活的纹理单元
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, texture2);
 		shader.use();
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
