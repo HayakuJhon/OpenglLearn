@@ -59,6 +59,7 @@ set(1.getting_started
     3.1.uniform
     3.2.more_attrib
     4.1.textures
+    5.1.transformations
 )
 
 
