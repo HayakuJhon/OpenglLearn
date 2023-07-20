@@ -12,6 +12,7 @@ unsigned const int WINDOW_WIDTH = 600;
 unsigned const int WINDOW_HEIGHT = 800;
 
 void inputProcess(GLFWwindow* window);
+void frameBufferSizeCallback(GLFWwindow* window, int width, int height);
 
 int main() {
 	glfwInit();
@@ -27,6 +28,7 @@ int main() {
 	}
 
 	glfwMakeContextCurrent(window);
+	glfwSetFramebufferSizeCallback(window, frameBufferSizeCallback);
 
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
 		std::cout << "Fial to load OpenGL api address" << std::endl;
@@ -163,4 +165,8 @@ void inputProcess(GLFWwindow* window) {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 		glfwSetWindowShouldClose(window, true);
 	}
+}
+
+void frameBufferSizeCallback(GLFWwindow* window,int width,int height) {
+	glViewport(0, 0, width, height);
 }
