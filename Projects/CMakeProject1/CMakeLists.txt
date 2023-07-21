@@ -60,6 +60,7 @@ set(1.getting_started
     3.2.more_attrib
     4.1.textures
     5.1.transformations
+    6.1.coordinate_systems
 )
 
 
