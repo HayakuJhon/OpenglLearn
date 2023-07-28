@@ -61,6 +61,7 @@ set(1.getting_started
     4.1.textures
     5.1.transformations
     6.1.coordinate_systems
+    7.1.camera_circle
 )
 
 
