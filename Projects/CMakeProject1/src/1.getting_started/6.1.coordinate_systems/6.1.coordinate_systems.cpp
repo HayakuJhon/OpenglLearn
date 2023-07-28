@@ -12,6 +12,7 @@ const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 void inputProcess(GLFWwindow* window);
 void framebuffersizeCallback(GLFWwindow* window, int width, int height);
+void cursorPosCallback(GLFWwindow* window, double xPos, double yPos);
 
 template <class T>
 int getArrayLength(const T& arr) {
@@ -23,6 +24,10 @@ int getArrayLength(const T& arr) {
 //{
 //	return  _Size;
 //}
+
+float down = 0.0,left = 0.0,forward = -5.0,lastPosX,lastPosY,deltaX = 0,deltaY = 0;
+bool isFirstPos = true;
+
 
 int main() {
 	glfwInit();
@@ -37,6 +42,9 @@ int main() {
 	}
 	glfwMakeContextCurrent(window);
 	glfwSetFramebufferSizeCallback(window, framebuffersizeCallback);
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	glfwSetCursorPosCallback(window, cursorPosCallback);
+	isFirstPos = true;
 
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
 		std::cout << "Fail to get OpenGL api address" << std::endl;
@@ -201,17 +209,21 @@ int main() {
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
 		int count = getArrayLength(cubePositions);
-		for (unsigned int i = 0; i < sizeof(cubePositions)/sizeof(cubePositions[0]); i++)
+		for (unsigned int i = 0; i < count; i++)
 		{
 			glm::mat4 model(1.0f);
 			model = glm::translate(model, cubePositions[i]);
-			model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f)+ 20.0f * i, glm::vec3(0.5, 1.0, 0.0));
+			if (i % 3 == 0)
+				model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f) + 20.0f * i, glm::vec3(0.5, 1.0, 0.0));
 
 			glm::mat4 view(1.0f);
-			view = glm::translate(view, glm::vec3(0.0, 0.0, -5.0));
+			view = glm::translate(view, glm::vec3(left, down, forward));
+			glm::rotate(view, deltaX, glm::vec3(0.0, 1.0, 0.0));
+			//glm::rotate(view, deltaY, glm::vec3(1.0, 0.0, 0.0));
+			std::cout << "cursorPos:" << deltaX << "," << deltaY << std::endl;
 
 			glm::mat4 projection(1.0f);
-			projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+			projection = glm::perspective(glm::radians(60.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 			glm::mat4 mvp(1.0f);
 			mvp = projection * view * model;
 			shader.setMat4("mvp", mvp);
@@ -236,9 +248,41 @@ void inputProcess(GLFWwindow* window) {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 		glfwSetWindowShouldClose(window, true);
 	}
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+		forward += 0.01f;
+	}
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+		forward -= 0.01f;
+	}
+	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
+		left += 0.01f;
+	}
+	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
+		left -= 0.01f;
+	}
+	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+		down -= 0.01f;
+	}
+	if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS) {
+		down += 0.01f;
+	}
 }
 
 void framebuffersizeCallback(GLFWwindow* window, int width, int height) {
 	glViewport(0, 0, width, height);
+}
+
+void cursorPosCallback(GLFWwindow* window, double xPos, double yPos) {
+	if (isFirstPos) {
+		isFirstPos = false;
+		/*lastPosX = xPos;
+		lastPosY = yPos;*/
+	}
+	else
+	{
+		
+		deltaX = xPos;
+		deltaY = yPos;
+	}
 }
 
