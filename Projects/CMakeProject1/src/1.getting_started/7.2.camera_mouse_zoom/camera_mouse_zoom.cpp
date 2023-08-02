@@ -29,6 +29,8 @@ float deltaTime = 0.0f;
 glm::vec2 lastPos(0.0f, 0.0f);
 bool isFirst = true;
 float fovy = 45.0f;
+float yaw = 0.0f;
+float pitch = 0.0f;
 
 int main() {
 	glfwInit();
@@ -267,21 +269,27 @@ void cursorPosCallback(GLFWwindow* window, double posX, double posY) {
 	std::cout << "posX:" << posX << ",posY:" << posY << "lastPos:" << lastPos.x << lastPos.y << std::endl;
 	float deltaX = posX - lastPos.x;
 	float deltaY = lastPos.y - posY;	//因为视窗坐标的原点在坐上角，往上滑动时Y是递减的
+	lastPos.x = (float)posX;
+	lastPos.y = (float)posY;
 	if (isFirst) {
-		lastPos.x = (float)posX;
-		lastPos.y = (float)posY;
 		isFirst = false;
 		return;
 	}
 	float sensitivity = 0.05f;
-	deltaX *= sensitivity;
-	deltaY *= sensitivity;
+	yaw += deltaX * sensitivity;
+	pitch += deltaY * sensitivity;
+	if (pitch >= 89.0f) {
+		pitch = 89.0f;
+	}
+	else if (pitch <= -89.0f) {
+		pitch = -89.0f;
+	}
 	//直接sin(x)可以得到方向向量绕Y轴旋转x度之后在XY平面的投影的x分量
 	//sin(y)同理得到在YZ平面上的投影的y分量
 	//z分量可以通过先投影到YZ屏幕的余弦，用这个余弦投影再投影到XZ屏幕就得到了z分量
-	cameraFront.x = glm::sin(glm::radians(deltaX));
-	cameraFront.y = glm::sin(glm::radians(deltaY));
-	cameraFront.z = -glm::cos(glm::radians(deltaX)) * glm::cos(glm::radians(deltaY));	//由于右手坐标系，摄像机的方向z分量和坐标系的z分量相反
+	cameraFront.x = glm::sin(glm::radians(yaw));
+	cameraFront.y = glm::sin(glm::radians(pitch));
+	cameraFront.z = -glm::cos(glm::radians(yaw)) * glm::cos(glm::radians(pitch));	//由于右手坐标系，摄像机的方向z分量和坐标系的z分量相反
 	cameraFront = glm::normalize(cameraFront);
 	std::cout << "x:" << cameraFront.x << ",y:" << cameraFront.y << ",z:" << cameraFront.z << std::endl;
 }
