@@ -120,6 +120,8 @@ int main() {
 
 	Shader shader("7.2.shader.vs", "7.2.shader.fs");
 
+	glfwSwapInterval(0);	//设置垂直同步。表示在交换缓冲区并返回之前，从调用glfwSwapBuffers开始等待的屏幕更新次数。
+
 	unsigned int VBO, VAO, EBO;
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
@@ -210,6 +212,7 @@ int main() {
 		float time = glfwGetTime();
 		deltaTime = time - lastTime;
 		lastTime = time;
+		std::cout << "fps:" << 1 / deltaTime << std::endl;
 		view = camera.GetViewMatrix();
 		for (int i = 0; i < ArrayLength(cubePositions); i++)
 		{
