@@ -63,6 +63,7 @@ set(1.getting_started
     6.1.coordinate_systems
     7.1.camera_circle
     7.2.camera_mouse_zoom
+    7.3.camera_class
 )
 
 
