@@ -24,6 +24,8 @@ const float SPEED = 2.5f;
 const float SENSITIVITY = 0.1f;
 const float ZOOM = 45.0f;
 
+glm::mat4 getLookAtMatrix(glm::vec3 position, glm::vec3 center, glm::vec3 up);
+
 class Camera
 {
 public:
@@ -58,7 +60,8 @@ public:
 	}
 
 	glm::mat4 GetViewMatrix() {
-		return glm::lookAt(Position, Position + Front, Up);
+		//return glm::lookAt(Position, Position + Front, Up);
+		return getLookAtMatrix(Position, Position + Front, Up);
 	}
 
 	void ProcessKeyboard(Camera_Movement direction,float deltaTime) {
@@ -122,4 +125,32 @@ private:
 		Up = glm::normalize(glm::cross(Right, Front));
 	}
 };
+
+//推到公式：https://zhuanlan.zhihu.com/p/552252893
+// ( 1 0 0 )                    ( ax bx cx )
+// ( 0 1 0 ) = MatrixRotation * ( ay by cy )
+// ( 0 0 -1)                    ( az bz cz )
+//通过旋转矩阵将摄像机的三个基向量变换到标准坐标系
+glm::mat4 getLookAtMatrix(glm::vec3 position, glm::vec3 center, glm::vec3 up) {
+	//摄像机的前向量
+	glm::vec3 zaxis = glm::normalize(center - position);	//摄像机的坐标系z轴基向量
+	glm::vec3 xaxis = glm::normalize(glm::cross(zaxis, up));
+	glm::vec3 yaxis = glm::normalize(glm::cross(xaxis, zaxis));
+	glm::mat4 translation(1.0f);
+	translation[3][0] = -position.x;
+	translation[3][1] = -position.y;
+	translation[3][2] = -position.z;
+	glm::mat4 rotation(1.0f);
+	rotation[0][0] = xaxis.x;	//第一列第一行
+	rotation[1][0] = xaxis.y;	//第二列第一行
+	rotation[2][0] = xaxis.z;
+	rotation[0][1] = up.x;		//第一列第二行
+	rotation[1][1] = up.y;
+	rotation[2][1] = up.z;
+	rotation[0][2] = -zaxis.x;
+	rotation[1][2] = -zaxis.y;
+	rotation[2][2] = -zaxis.z;
+
+	return rotation * translation;
+}
 #endif
