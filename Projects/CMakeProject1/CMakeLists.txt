@@ -49,6 +49,7 @@ endif(WIN32)
 
 set(CHAPTERS
     1.getting_started
+    2.lighting
 )
 
 set(1.getting_started
@@ -64,6 +65,10 @@ set(1.getting_started
     7.1.camera_circle
     7.2.camera_mouse_zoom
     7.3.camera_class
+)
+
+set(2.lighting
+    1.colors
 )
 
 

@@ -106,12 +106,14 @@ public:
 
 	void ProcessMouseScroll(float offsetY) {
 		Zoom -= offsetY;
-		/*if (Zoom < 1.0f) {
+		std::cout << "zoom:" << Zoom << std::endl;
+		//需要限制，否则会突破90度导致反向缩放
+		if (Zoom < 1.0f) {
 			Zoom = 1.0f;
 		}
 		else if (Zoom > 45.0f) {
 			Zoom = 45.0f;
-		}*/
+		}
 	}
 
 private:
