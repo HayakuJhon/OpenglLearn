@@ -20,6 +20,7 @@ bool isFirst = true;
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 // lighting
 glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
+float Shininess = 32.0f;
 
 int main() {
 	glfwInit();
@@ -129,9 +130,11 @@ int main() {
 		glm::mat4 projection(1.0f);
 		projection = glm::perspective(camera.Zoom, (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 		lightingShader.use();
-		model = glm::scale(model, glm::vec3(0.3, 0.5, 0.8));
+		//model = glm::scale(model, glm::vec3(0.3, 0.5, 0.8));
 		glm::mat3 normalMat(model);
 		normalMat = glm::transpose(glm::inverse(normalMat));
+		lightingShader.setFloat("Shininess", Shininess);
+		lightingShader.setVec3("viewPos", camera.Position);
 		lightingShader.setMat3("normalMat", normalMat);
 		lightingShader.setMat4("model", model);
 		lightingShader.setMat4("view", view);
@@ -188,6 +191,24 @@ void inputProcess(GLFWwindow* window) {
 	}
 	if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS) {
 		camera.ProcessKeyboard(DOWN, deltaTime);
+	}
+	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
+		lightPos.z -= 0.1f;
+	}
+	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
+		lightPos.z += 0.1f;
+	}
+	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
+		lightPos.x -= 0.1f;
+	}
+	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
+		lightPos.x += 0.1f;
+	}
+	if (glfwGetKey(window, GLFW_KEY_RIGHT_SHIFT) == GLFW_PRESS) {
+		lightPos.y += 0.1f;
+	}
+	if (glfwGetKey(window, GLFW_KEY_RIGHT_CONTROL) == GLFW_PRESS) {
+		lightPos.y -= 0.1f;
 	}
 }
 
