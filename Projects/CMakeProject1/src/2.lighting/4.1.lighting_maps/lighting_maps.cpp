@@ -9,12 +9,9 @@
 const unsigned int SCR_WIDTH = 600;
 const unsigned int SCR_HEIGHT = 800;
 
-void inputProcess(GLFWwindow* window);
 void cursorPosCallback(GLFWwindow* window, double posX, double posY);
 void scrollCallback(GLFWwindow* window, double offsetX, double offsetY);
 
-//float lastTime = 0.0f;
-//float deltaTime = 0.0f;
 glm::vec2 lastPos(0.0f, 0.0f);
 bool isFirst = true;
 
@@ -118,10 +115,6 @@ int main() {
 	while (!glfwWindowShouldClose(window))
 	{
 		InputUtils::inputProcess(window, &camera, &lightPos);
-		/*inputProcess(window);
-		float time = glfwGetTime();
-		deltaTime = time - lastTime;
-		lastTime = time;*/
 
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -129,7 +122,6 @@ int main() {
 
 		glm::mat4 model(1.0f);
 		glm::mat4 view = camera.GetViewMatrix();
-		//std::cout << "posZ:" << camera.Position.z << std::endl;
 		glm::mat4 projection(1.0f);
 		projection = glm::perspective(camera.Zoom, (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 		lightingShader.use();
@@ -150,7 +142,7 @@ int main() {
 		lightingShader.setVec3("material.ambientColor", glm::vec3(1.0f, 0.5f, 0.31f));
 		lightingShader.setVec3("material.diffuse", glm::vec3(1.0f, 0.5f, 0.31f));
 		lightingShader.setVec3("material.specular", glm::vec3(0.5f, 0.5f, 0.5f));
-		
+
 		glBindVertexArray(VAO);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
@@ -178,50 +170,6 @@ int main() {
 	return 0;
 }
 
-void inputProcess(GLFWwindow* window) {
-	//inputProcess(window, &camera, &lightPos,deltaTime);
-	//std::cout << camera.Position.z << std::endl;
-
-	//if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
-	//	glfwSetWindowShouldClose(window, true);
-	//}
-	//if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-	//	camera.ProcessKeyboard(FORWARD, deltaTime);
-	//}
-	//if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-	//	camera.ProcessKeyboard(BACKWARD, deltaTime);
-	//}
-	//if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-	//	camera.ProcessKeyboard(LEFT, deltaTime);
-	//}
-	//if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-	//	camera.ProcessKeyboard(RIGHT, deltaTime);
-	//}
-	//if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-	//	camera.ProcessKeyboard(UP, deltaTime);
-	//}
-	//if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS) {
-	//	camera.ProcessKeyboard(DOWN, deltaTime);
-	//}
-	//if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
-	//	lightPos.z -= 0.1f;
-	//}
-	//if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
-	//	lightPos.z += 0.1f;
-	//}
-	//if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
-	//	lightPos.x -= 0.1f;
-	//}
-	//if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
-	//	lightPos.x += 0.1f;
-	//}
-	//if (glfwGetKey(window, GLFW_KEY_RIGHT_SHIFT) == GLFW_PRESS) {
-	//	lightPos.y += 0.1f;
-	//}
-	//if (glfwGetKey(window, GLFW_KEY_RIGHT_CONTROL) == GLFW_PRESS) {
-	//	lightPos.y -= 0.1f;
-	//}
-}
 
 void cursorPosCallback(GLFWwindow* window, double posX, double posY) {
 	//std::cout << "posX:" << posX << ",posY:" << posY << "lastPos:" << lastPos.x << lastPos.y << std::endl;

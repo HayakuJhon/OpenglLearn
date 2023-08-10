@@ -71,6 +71,7 @@ set(2.lighting
     1.colors
     2.1.basic_lighting
     3.1.meterials
+    4.1.lighting_maps
 )
 
 
