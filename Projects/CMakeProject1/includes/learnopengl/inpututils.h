@@ -18,6 +18,10 @@ class InputUtils
 public:
 	
 	static void inputProcess(GLFWwindow* window, Camera* camera, glm::vec3* lightPos) {
+		float time = glfwGetTime();
+		deltaTime = time - lastTime;
+		lastTime = time;
+		if (ImGui::GetIO().WantCaptureKeyboard) return;
 		if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 			glfwSetWindowShouldClose(window, true);
 		}
@@ -57,11 +61,6 @@ public:
 		if (glfwGetKey(window, GLFW_KEY_RIGHT_CONTROL) == GLFW_PRESS) {
 			(*lightPos).y -= 0.1f;
 		}
-		
-
-		float time = glfwGetTime();
-		deltaTime = time - lastTime;
-		lastTime = time;
 	}
 	static void cursorPosCallback(GLFWwindow* window, Camera* camera, double posX, double posY) {
 		if (!isPress) {
@@ -86,18 +85,25 @@ public:
 	}
 
 	static void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
+		ImGuiIO& io = ImGui::GetIO();
 		if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
-			if (!isPress) {
+			io.AddMouseButtonEvent(button, true);
+			if (!isPress && !io.WantCaptureMouse) {
 				isPress = true;
 				glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 			}
 		}
 		else {
-			if (isPress) {
+			ImGui::GetIO().AddMouseButtonEvent(button, false);
+			if (isPress && !io.WantCaptureMouse) {
 				isPress = false;
 				glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 			}
 		}
+	}
+
+	static void frameBufferSizeCallback(GLFWwindow* window, int width, int height) {
+		glViewport(0, 0, width, height);
 	}
 private:
 	
