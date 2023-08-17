@@ -4,7 +4,7 @@
 #include <learnopengl/camera.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
-#include <imgui/imgui.h>
+#include <imgui.h>
 #include <learnopengl/camera.h>
 
 float static deltaTime = 0.0f;

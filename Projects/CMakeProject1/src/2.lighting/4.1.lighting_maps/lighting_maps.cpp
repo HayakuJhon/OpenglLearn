@@ -7,15 +7,17 @@
 #include <learnopengl/inpututils.h>
 #include <stb_image.h>
 #include <learnopengl/filesystem.h>
-#include <imgui/imgui.h>
-#include <imgui/imgui_impl_glfw.h>
-#include <imgui/imgui_impl_opengl3.h>
+#include <imgui.h>
+#include <imgui_impl_glfw.h>
+#include <imgui_impl_opengl3.h>
+#include <learnopengl/utils.h>
 
 const unsigned int SCR_WIDTH = 600;
 const unsigned int SCR_HEIGHT = 800;
 
 void cursorPosCallback(GLFWwindow* window, double posX, double posY);
 void scrollCallback(GLFWwindow* window, double offsetX, double offsetY);
+void showMyImGui();
 
 //glm::vec2 lastPos(0.0f, 0.0f);
 //bool isFirst = true;
@@ -23,8 +25,12 @@ void scrollCallback(GLFWwindow* window, double offsetX, double offsetY);
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 // lighting
 glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
-glm::vec3 lightColor(1.0f, 1.0f, 1.0f);
+glm::vec4 lightAmbient(0.1f, 0.1f, 0.1f, 1.0f);
+glm::vec4 lightDiffuse(1.0f, 1.0f, 1.0f, 1.0f);
+glm::vec4 lightSpecular(1.0f, 1.0f, 1.0f,1.0);
 float Shininess = 128.0f;
+
+bool* p_open;
 
 int main() {
 	glfwInit();
@@ -189,7 +195,8 @@ int main() {
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
-		ImGui::ShowDemoWindow();
+		//ImGui::ShowDemoWindow();
+		showMyImGui();
 
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -208,9 +215,9 @@ int main() {
 		lightingShader.setMat4("model", model);
 		lightingShader.setMat4("view", view);
 		lightingShader.setMat4("projection", projection);
-		lightingShader.setVec3("light.ambient", glm::vec3(0.1f, 0.1f, 0.1f));
-		lightingShader.setVec3("light.diffuse", lightColor);
-		lightingShader.setVec3("light.specular", glm::vec3(1.0f, 1.0f, 1.0f));
+		lightingShader.setVec4("light.ambient",lightAmbient);
+		lightingShader.setVec4("light.diffuse", lightDiffuse);
+		lightingShader.setVec4("light.specular", lightSpecular);
 		lightingShader.setVec3("light.lightPos", lightPos);
 
 		lightingShader.setFloat("material.shininess", 0.4 * Shininess);
@@ -234,7 +241,7 @@ int main() {
 		lightCubeShader.setMat4("model", model);
 		lightCubeShader.setMat4("view", view);
 		lightCubeShader.setMat4("projection", projection);
-		lightCubeShader.setVec3("lightColor", lightColor);
+		lightCubeShader.setVec4("lightColor", lightDiffuse);
 
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 		ImGui::Render();
@@ -262,4 +269,29 @@ void cursorPosCallback(GLFWwindow* window, double posX, double posY) {
 
 void scrollCallback(GLFWwindow* window, double offsetX, double offsetY) {
 	InputUtils::scrollCallback(window, &camera, offsetX, offsetY);
+}
+
+void showMyImGui() {
+	IM_ASSERT(ImGui::GetCurrentContext() != NULL && "Missing dear imgui context. Refer to examples app!");
+	const ImGuiViewport* main_viewport = ImGui::GetMainViewport();
+	ImGui::SetNextWindowPos(ImVec2(main_viewport->WorkPos.x, main_viewport->WorkPos.y + 20), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSize(ImVec2(200, 100), ImGuiCond_FirstUseEver);
+	if (!ImGui::Begin("parameter", p_open)) {
+		ImGui::End();
+		return;
+	}
+	ImGui::Text("dear imgui says hello! (%s) (%d)", IMGUI_VERSION, IMGUI_VERSION_NUM);
+	ImGui::Spacing();
+	ImGui::PushItemWidth(ImGui::GetFontSize() * -12);
+
+
+	//if (ImGui::TreeNode("colors")) {
+		static ImVec4 color = ImVec4(114.0f / 255.0f, 144.0f / 255.0f, 154.0f / 255.0f, 200.0f / 255.0f);
+		ImGui::ColorEdit4("MyColor##2f", (float*)&color, ImGuiColorEditFlags_Float);
+		Utils::ImVecToGlmVec(color, lightDiffuse);
+	//	ImGui::TreePop();
+	//}
+
+	ImGui::PopItemWidth();
+	ImGui::End();
 }

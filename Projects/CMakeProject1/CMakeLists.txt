@@ -88,10 +88,13 @@ set(LIBS ${LIBS} STB_IMAGE)
 add_library(GLAD "src/glad.c")
 set(LIBS ${LIBS} GLAD)
 
-file(GLOB IMGUI_SRCS
-    ${CMAKE_SOURCE_DIR}/includes/imgui/*.cpp
-    ${CMAKE_SOURCE_DIR}/includes/imgui/*.h)
-message(STATUS "--------------" ${IMGUI_SRCS})
+
+
+#file(GLOB IMGUI_SRCS
+#    ${CMAKE_SOURCE_DIR}/src/imgui/*.cpp)
+#message(STATUS "--------------" ${IMGUI_SRCS})
+add_library(IMGUI "src/imgui/imgui.cpp" "src/imgui/imgui_demo.cpp" "src/imgui/imgui_draw.cpp" "src/imgui/imgui_impl_glfw.cpp" "src/imgui/imgui_impl_opengl3.cpp" "src/imgui/imgui_tables.cpp" "src/imgui/imgui_widgets.cpp")
+set(LIBS ${LIBS} IMGUI)
 
 #add_executable(${PROJECT_NAME} ${IMGUI_SRCS}) #添加WIN32参数就不会显示控制台界面了
 #target_link_libraries(${PROJECT_NAME} ${LIBS})
@@ -121,7 +124,7 @@ function(create_project_from_sources chapter demo)
 		set(NAME "${chapter}__${demo}")
 	endif()
     message(STATUS "-------${NAME},${SOURCE}")
-    add_executable(${NAME} ${SOURCE} ${IMGUI_SRCS})
+    add_executable(${NAME} ${SOURCE})# ${IMGUI_SRCS})
     target_link_libraries(${NAME} ${LIBS})
     if(MSVC)
 		target_compile_options(${NAME} PRIVATE /std:c++17 /MP)
