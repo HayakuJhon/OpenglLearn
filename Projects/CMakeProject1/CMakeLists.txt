@@ -88,6 +88,14 @@ set(LIBS ${LIBS} STB_IMAGE)
 add_library(GLAD "src/glad.c")
 set(LIBS ${LIBS} GLAD)
 
+file(GLOB IMGUI_SRCS
+    ${CMAKE_SOURCE_DIR}/includes/imgui/*.cpp
+    ${CMAKE_SOURCE_DIR}/includes/imgui/*.h)
+message(STATUS "--------------" ${IMGUI_SRCS})
+
+#add_executable(${PROJECT_NAME} ${IMGUI_SRCS}) #添加WIN32参数就不会显示控制台界面了
+#target_link_libraries(${PROJECT_NAME} ${LIBS})
+
 # 将源代码添加到此项目的可执行文件。
 #add_executable (CMakeProject1 "src/1.getting_started/1.2.hello_window/hellowindow.cpp")
 #target_link_libraries(CMakeProject1 ${LIBS})
@@ -113,7 +121,7 @@ function(create_project_from_sources chapter demo)
 		set(NAME "${chapter}__${demo}")
 	endif()
     message(STATUS "-------${NAME},${SOURCE}")
-    add_executable(${NAME} ${SOURCE})
+    add_executable(${NAME} ${SOURCE} ${IMGUI_SRCS})
     target_link_libraries(${NAME} ${LIBS})
     if(MSVC)
 		target_compile_options(${NAME} PRIVATE /std:c++17 /MP)

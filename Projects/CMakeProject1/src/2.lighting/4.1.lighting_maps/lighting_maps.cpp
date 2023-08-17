@@ -7,6 +7,9 @@
 #include <learnopengl/inpututils.h>
 #include <stb_image.h>
 #include <learnopengl/filesystem.h>
+#include <imgui/imgui.h>
+#include <imgui/imgui_impl_glfw.h>
+#include <imgui/imgui_impl_opengl3.h>
 
 const unsigned int SCR_WIDTH = 600;
 const unsigned int SCR_HEIGHT = 800;
@@ -14,8 +17,8 @@ const unsigned int SCR_HEIGHT = 800;
 void cursorPosCallback(GLFWwindow* window, double posX, double posY);
 void scrollCallback(GLFWwindow* window, double offsetX, double offsetY);
 
-glm::vec2 lastPos(0.0f, 0.0f);
-bool isFirst = true;
+//glm::vec2 lastPos(0.0f, 0.0f);
+//bool isFirst = true;
 
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 // lighting
@@ -36,7 +39,8 @@ int main() {
 		return -1;
 	}
 	glfwMakeContextCurrent(window);
-	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	glfwSetMouseButtonCallback(window, InputUtils::mouseButtonCallback);
+	//glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	glfwSetCursorPosCallback(window, cursorPosCallback);
 	glfwSetScrollCallback(window, scrollCallback);
 
@@ -46,6 +50,20 @@ int main() {
 		scanf("c");
 		return -1;
 	}
+
+	//imgui
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO();
+	ImGuiIO& io1 = io;
+	std::cout << &io << "," << &io1 << std::endl;
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
+	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+	io.ConfigFlags |= ImGuiConfigFlags_NoMouseCursorChange;
+
+	ImGui_ImplGlfw_InitForOpenGL(window, true);
+	ImGui_ImplOpenGL3_Init();
 
 	glEnable(GL_DEPTH_TEST);
 	float vertices[] = {
@@ -167,6 +185,10 @@ int main() {
 	while (!glfwWindowShouldClose(window))
 	{
 		InputUtils::inputProcess(window, &camera, &lightPos);
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+		ImGui::ShowDemoWindow();
 
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -214,11 +236,16 @@ int main() {
 		lightCubeShader.setVec3("lightColor", lightColor);
 
 		glDrawArrays(GL_TRIANGLES, 0, 36);
-
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		glfwSwapBuffers(window);
 		glfwPollEvents();
+		
 	}
 
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplGlfw_Shutdown();
+	ImGui::DestroyContext();
 	glDeleteBuffers(1, &VBO);
 	glDeleteVertexArrays(1, &VAO);
 	glDeleteVertexArrays(1, &lightVAO);
@@ -229,19 +256,9 @@ int main() {
 
 
 void cursorPosCallback(GLFWwindow* window, double posX, double posY) {
-	//std::cout << "posX:" << posX << ",posY:" << posY << "lastPos:" << lastPos.x << lastPos.y << std::endl;
-	float deltaX = posX - lastPos.x;
-	float deltaY = lastPos.y - posY;	//因为视窗坐标的原点在坐上角，往上滑动时Y是递减的
-	lastPos.x = (float)posX;
-	lastPos.y = (float)posY;
-	if (isFirst) {
-		isFirst = false;
-		return;
-	}
-	camera.ProcessMouseMovement(deltaX, deltaY);
-	//std::cout << "x:" << camera.Front.x << ",y:" << camera.Front.y << ",z:" << camera.Front.z << std::endl;
+	InputUtils::cursorPosCallback(window, &camera, posX, posY);
 }
 
 void scrollCallback(GLFWwindow* window, double offsetX, double offsetY) {
-	camera.ProcessMouseScroll(offsetY);
+	InputUtils::scrollCallback(window, &camera, offsetX, offsetY);
 }
