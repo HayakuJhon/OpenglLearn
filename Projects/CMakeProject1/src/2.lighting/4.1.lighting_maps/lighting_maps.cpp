@@ -25,6 +25,7 @@ void showMyImGui();
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 // lighting
 glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
+glm::vec3 lightDir(-0.2f, -1.0f, -0.3f);
 glm::vec4 lightAmbient(0.1f, 0.1f, 0.1f, 1.0f);
 glm::vec4 lightDiffuse(1.0f, 1.0f, 1.0f, 1.0f);
 glm::vec4 lightSpecular(1.0f, 1.0f, 1.0f,1.0);
@@ -139,7 +140,7 @@ int main() {
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
 	glEnableVertexAttribArray(2);
 
 	//textures
@@ -182,6 +183,7 @@ int main() {
 		lightingShader.setVec4("light.diffuse", lightDiffuse);
 		lightingShader.setVec4("light.specular", lightSpecular);
 		lightingShader.setVec3("light.lightPos", lightPos);
+		lightingShader.setVec3("light.lightDir", lightDir);
 
 		lightingShader.setFloat("material.shininess", 0.4 * Shininess);
 		glActiveTexture(GL_TEXTURE0);
@@ -250,12 +252,17 @@ void showMyImGui() {
 	static ImVec4 ambient = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
 	static ImVec4 diffuse = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
 	static ImVec4 specular = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
+	static float lightDirection[] = { -0.2f, -1.0f, -0.3f };
 		ImGui::ColorEdit4("ambient", (float*)&ambient, ImGuiColorEditFlags_Float);
 		Utils::ImVecToGlmVec(ambient, lightAmbient);
 		ImGui::ColorEdit4("diffuse", (float*)&diffuse, ImGuiColorEditFlags_Float);
 		Utils::ImVecToGlmVec(diffuse, lightDiffuse);
 		ImGui::ColorEdit4("specular", (float*)&specular, ImGuiColorEditFlags_Float);
 		Utils::ImVecToGlmVec(specular, lightSpecular);
+		ImGui::DragFloat3("lightDir", lightDirection, 0.01f, -1.0f, 1.0f);
+		lightDir.x = lightDirection[0];
+		lightDir.y = lightDirection[1];
+		lightDir.z = lightDirection[2];
 	//	ImGui::TreePop();
 	//}
 

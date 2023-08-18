@@ -11,6 +11,7 @@ struct Light{
 	vec4 ambient;
 	vec4 diffuse;
 	vec4 specular;
+	vec3 lightDir;
 };
 uniform Material material;
 uniform Light light;
@@ -26,7 +27,7 @@ void main(){
 
 	//diffuse
 	vec3 diffuse = vec3(texture(material.diffuse,TexCoord));
-	vec3 lightDir = normalize(light.lightPos - FragPos);
+	vec3 lightDir = normalize(-light.lightDir);//normalize(light.lightPos - FragPos);
 	float dotValue = max(dot(normalize(Normal),lightDir),0.0);
 	vec3 diffuseColor = vec3(light.diffuse) * dotValue * diffuse;
 
