@@ -117,7 +117,7 @@ int main() {
 
 	while (!glfwWindowShouldClose(window))
 	{
-		InputUtils::inputProcess(window, &camera, &lightPos);
+		InputUtils::inputProcess(window, camera, lightPos);
 		/*inputProcess(window);
 		float time = glfwGetTime();
 		deltaTime = time - lastTime;

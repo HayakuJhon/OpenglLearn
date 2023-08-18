@@ -191,7 +191,7 @@ int main() {
 
 	while (!glfwWindowShouldClose(window))
 	{
-		InputUtils::inputProcess(window, &camera, &lightPos);
+		InputUtils::inputProcess(window, camera, lightPos);
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
@@ -264,7 +264,7 @@ int main() {
 
 
 void cursorPosCallback(GLFWwindow* window, double posX, double posY) {
-	InputUtils::cursorPosCallback(window, &camera, posX, posY);
+	InputUtils::cursorPosCallback(window, camera, posX, posY);
 }
 
 void scrollCallback(GLFWwindow* window, double offsetX, double offsetY) {
