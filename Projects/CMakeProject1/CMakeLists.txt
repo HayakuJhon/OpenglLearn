@@ -90,10 +90,15 @@ set(LIBS ${LIBS} GLAD)
 
 
 
-#file(GLOB IMGUI_SRCS
-#    ${CMAKE_SOURCE_DIR}/src/imgui/*.cpp)
-#message(STATUS "--------------" ${IMGUI_SRCS})
-add_library(IMGUI "src/imgui/imgui.cpp" "src/imgui/imgui_demo.cpp" "src/imgui/imgui_draw.cpp" "src/imgui/imgui_impl_glfw.cpp" "src/imgui/imgui_impl_opengl3.cpp" "src/imgui/imgui_tables.cpp" "src/imgui/imgui_widgets.cpp")
+file(GLOB IMGUI_SRCS
+    ${CMAKE_SOURCE_DIR}/src/imgui/*.cpp)
+foreach(TEMP_PATH ${IMGUI_SRCS})
+    string(REPLACE "${CMAKE_SOURCE_DIR}/" "" rel_path ${TEMP_PATH})
+    list(APPEND REL_IMGUI_PATH ${rel_path})
+endforeach()
+
+add_library(IMGUI ${REL_IMGUI_PATH})
+#add_library(IMGUI "src/imgui/imgui.cpp" "src/imgui/imgui_demo.cpp" "src/imgui/imgui_draw.cpp" "src/imgui/imgui_impl_glfw.cpp" "src/imgui/imgui_impl_opengl3.cpp" "src/imgui/imgui_tables.cpp" "src/imgui/imgui_widgets.cpp")
 set(LIBS ${LIBS} IMGUI)
 
 #add_executable(${PROJECT_NAME} ${IMGUI_SRCS}) #添加WIN32参数就不会显示控制台界面了

@@ -286,9 +286,15 @@ void showMyImGui() {
 
 
 	//if (ImGui::TreeNode("colors")) {
-		static ImVec4 color = ImVec4(114.0f / 255.0f, 144.0f / 255.0f, 154.0f / 255.0f, 200.0f / 255.0f);
-		ImGui::ColorEdit4("MyColor##2f", (float*)&color, ImGuiColorEditFlags_Float);
-		Utils::ImVecToGlmVec(color, lightDiffuse);
+	static ImVec4 ambient = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
+	static ImVec4 diffuse = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
+	static ImVec4 specular = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
+		ImGui::ColorEdit4("ambient", (float*)&ambient, ImGuiColorEditFlags_Float);
+		Utils::ImVecToGlmVec(ambient, lightAmbient);
+		ImGui::ColorEdit4("diffuse", (float*)&diffuse, ImGuiColorEditFlags_Float);
+		Utils::ImVecToGlmVec(diffuse, lightDiffuse);
+		ImGui::ColorEdit4("specular", (float*)&specular, ImGuiColorEditFlags_Float);
+		Utils::ImVecToGlmVec(specular, lightSpecular);
 	//	ImGui::TreePop();
 	//}
 
