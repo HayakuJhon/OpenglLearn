@@ -50,6 +50,11 @@ public:
 
 		return textureID;
 	}
+
+	template <class T>
+	static int ArrayLength(const T& arr) {
+		return sizeof(arr) / sizeof(arr[0]);
+	}
 private:
 
 };
