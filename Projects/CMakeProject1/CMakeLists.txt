@@ -72,6 +72,7 @@ set(2.lighting
     2.1.basic_lighting
     3.1.meterials
     4.1.lighting_maps
+    5.1.light_casters
 )
 
 
