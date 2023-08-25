@@ -33,6 +33,10 @@ float Shininess = 128.0f;
 float constant = 1.0f;
 float linear = 0.09f;
 float quadratic = 0.032f;
+glm::vec4 spotColor(1.0f, 1.0f, 1.0f, 1.0f);
+glm::vec3 spotDir(0.0f, 0.0f, -1.0f);
+float spotInnerDot = 0.91f;
+float spotOuterDot = 0.82f;
 
 bool* p_open;
 
@@ -205,6 +209,13 @@ int main() {
 		lightingShader.setVec4("dirLight.diffuse", lightDiffuse);
 		lightingShader.setVec4("dirLight.specular", lightSpecular);
 
+		//spot light
+		lightingShader.setVec3("spotLight.position", camera.Position);
+		lightingShader.setVec3("spotLight.spotDir", camera.Front);
+		lightingShader.setVec4("spotLight.lightColor", spotColor);
+		lightingShader.setFloat("spotLight.spotInnerDot", spotInnerDot);
+		lightingShader.setFloat("spotLight.spotOuterDot", spotOuterDot);
+
 		lightingShader.setFloat("material.shininess", 0.4 * Shininess);
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, texture1);
@@ -281,8 +292,10 @@ void showMyImGui() {
 	static ImVec4 ambient = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
 	static ImVec4 diffuse = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
 	static ImVec4 specular = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
+	static ImVec4 spot_Color = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
 	static float lightDirection[] = { -0.2f, -1.0f, -0.3f };
 	static float pointContants[] = { 1.0f ,0.09f ,0.032f };
+	static float cutOff[] = { 0.91f,0.82f };
 	ImGui::ColorEdit4("ambient", (float*)&ambient, ImGuiColorEditFlags_Float);
 	Utils::ImVecToGlmVec(ambient, lightAmbient);
 	ImGui::ColorEdit4("diffuse", (float*)&diffuse, ImGuiColorEditFlags_Float);
@@ -297,6 +310,11 @@ void showMyImGui() {
 	constant = pointContants[0];
 	linear = pointContants[1];
 	quadratic = pointContants[2];
+	ImGui::ColorEdit4("spotColor", (float*)&spot_Color);
+	Utils::ImVecToGlmVec(spot_Color, spotColor);
+	ImGui::DragFloat2("cutoff", cutOff, 0.001f, 0.0f, 1.0f);
+	spotInnerDot = cutOff[0];
+	spotOuterDot = cutOff[1];
 	//	ImGui::TreePop();
 	//}
 
