@@ -1,0 +1,15 @@
+D:\Git\OpenglLearn\assimp-5.2.5\contrib\zlib\adler32.c;D:\Git\OpenglLearn\assimp-5.2.5\build\contrib\zlib\zlibstatic.dir\Release\adler32.obj
+D:\Git\OpenglLearn\assimp-5.2.5\contrib\zlib\compress.c;D:\Git\OpenglLearn\assimp-5.2.5\build\contrib\zlib\zlibstatic.dir\Release\compress.obj
+D:\Git\OpenglLearn\assimp-5.2.5\contrib\zlib\crc32.c;D:\Git\OpenglLearn\assimp-5.2.5\build\contrib\zlib\zlibstatic.dir\Release\crc32.obj
+D:\Git\OpenglLearn\assimp-5.2.5\contrib\zlib\deflate.c;D:\Git\OpenglLearn\assimp-5.2.5\build\contrib\zlib\zlibstatic.dir\Release\deflate.obj
+D:\Git\OpenglLearn\assimp-5.2.5\contrib\zlib\gzclose.c;D:\Git\OpenglLearn\assimp-5.2.5\build\contrib\zlib\zlibstatic.dir\Release\gzclose.obj
+D:\Git\OpenglLearn\assimp-5.2.5\contrib\zlib\gzlib.c;D:\Git\OpenglLearn\assimp-5.2.5\build\contrib\zlib\zlibstatic.dir\Release\gzlib.obj
+D:\Git\OpenglLearn\assimp-5.2.5\contrib\zlib\gzread.c;D:\Git\OpenglLearn\assimp-5.2.5\build\contrib\zlib\zlibstatic.dir\Release\gzread.obj
+D:\Git\OpenglLearn\assimp-5.2.5\contrib\zlib\gzwrite.c;D:\Git\OpenglLearn\assimp-5.2.5\build\contrib\zlib\zlibstatic.dir\Release\gzwrite.obj
+D:\Git\OpenglLearn\assimp-5.2.5\contrib\zlib\inflate.c;D:\Git\OpenglLearn\assimp-5.2.5\build\contrib\zlib\zlibstatic.dir\Release\inflate.obj
+D:\Git\OpenglLearn\assimp-5.2.5\contrib\zlib\infback.c;D:\Git\OpenglLearn\assimp-5.2.5\build\contrib\zlib\zlibstatic.dir\Release\infback.obj
+D:\Git\OpenglLearn\assimp-5.2.5\contrib\zlib\inftrees.c;D:\Git\OpenglLearn\assimp-5.2.5\build\contrib\zlib\zlibstatic.dir\Release\inftrees.obj
+D:\Git\OpenglLearn\assimp-5.2.5\contrib\zlib\inffast.c;D:\Git\OpenglLearn\assimp-5.2.5\build\contrib\zlib\zlibstatic.dir\Release\inffast.obj
+D:\Git\OpenglLearn\assimp-5.2.5\contrib\zlib\trees.c;D:\Git\OpenglLearn\assimp-5.2.5\build\contrib\zlib\zlibstatic.dir\Release\trees.obj
+D:\Git\OpenglLearn\assimp-5.2.5\contrib\zlib\uncompr.c;D:\Git\OpenglLearn\assimp-5.2.5\build\contrib\zlib\zlibstatic.dir\Release\uncompr.obj
+D:\Git\OpenglLearn\assimp-5.2.5\contrib\zlib\zutil.c;D:\Git\OpenglLearn\assimp-5.2.5\build\contrib\zlib\zlibstatic.dir\Release\zutil.obj

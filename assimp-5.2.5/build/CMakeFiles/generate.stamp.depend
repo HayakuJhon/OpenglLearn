@@ -1,0 +1,42 @@
+# CMake generation dependency list for this directory.
+D:/Git/OpenglLearn/assimp-5.2.5/CMakeLists.txt
+D:/Git/OpenglLearn/assimp-5.2.5/assimp.pc.in
+D:/Git/OpenglLearn/assimp-5.2.5/build/CMakeFiles/3.26.1/CMakeCCompiler.cmake
+D:/Git/OpenglLearn/assimp-5.2.5/build/CMakeFiles/3.26.1/CMakeCXXCompiler.cmake
+D:/Git/OpenglLearn/assimp-5.2.5/build/CMakeFiles/3.26.1/CMakeRCCompiler.cmake
+D:/Git/OpenglLearn/assimp-5.2.5/build/CMakeFiles/3.26.1/CMakeSystem.cmake
+D:/Git/OpenglLearn/assimp-5.2.5/cmake-modules/FindPkgMacros.cmake
+D:/Git/OpenglLearn/assimp-5.2.5/cmake-modules/FindZLIB.cmake
+D:/Git/OpenglLearn/assimp-5.2.5/cmake-modules/PrecompiledHeader.cmake
+D:/Git/OpenglLearn/assimp-5.2.5/cmake-modules/assimp-plain-config.cmake.in
+D:/Git/OpenglLearn/assimp-5.2.5/cmake-modules/cmake_uninstall.cmake.in
+D:/Git/OpenglLearn/assimp-5.2.5/include/assimp/config.h.in
+D:/Git/OpenglLearn/assimp-5.2.5/revision.h.in
+D:/Program Files/CMake/share/cmake-3.26/Modules/BasicConfigVersion-SameMajorVersion.cmake.in
+D:/Program Files/CMake/share/cmake-3.26/Modules/CMakeCInformation.cmake
+D:/Program Files/CMake/share/cmake-3.26/Modules/CMakeCXXInformation.cmake
+D:/Program Files/CMake/share/cmake-3.26/Modules/CMakeCommonLanguageInclude.cmake
+D:/Program Files/CMake/share/cmake-3.26/Modules/CMakeGenericSystem.cmake
+D:/Program Files/CMake/share/cmake-3.26/Modules/CMakeInitializeConfigs.cmake
+D:/Program Files/CMake/share/cmake-3.26/Modules/CMakeLanguageInformation.cmake
+D:/Program Files/CMake/share/cmake-3.26/Modules/CMakePackageConfigHelpers.cmake
+D:/Program Files/CMake/share/cmake-3.26/Modules/CMakeRCInformation.cmake
+D:/Program Files/CMake/share/cmake-3.26/Modules/CMakeSystemSpecificInformation.cmake
+D:/Program Files/CMake/share/cmake-3.26/Modules/CMakeSystemSpecificInitialize.cmake
+D:/Program Files/CMake/share/cmake-3.26/Modules/CheckFunctionExists.cmake
+D:/Program Files/CMake/share/cmake-3.26/Modules/CheckIncludeFile.cmake
+D:/Program Files/CMake/share/cmake-3.26/Modules/CheckIncludeFileCXX.cmake
+D:/Program Files/CMake/share/cmake-3.26/Modules/CheckTypeSize.cmake
+D:/Program Files/CMake/share/cmake-3.26/Modules/Compiler/CMakeCommonCompilerMacros.cmake
+D:/Program Files/CMake/share/cmake-3.26/Modules/Compiler/MSVC-C.cmake
+D:/Program Files/CMake/share/cmake-3.26/Modules/Compiler/MSVC-CXX.cmake
+D:/Program Files/CMake/share/cmake-3.26/Modules/Compiler/MSVC.cmake
+D:/Program Files/CMake/share/cmake-3.26/Modules/FindPackageHandleStandardArgs.cmake
+D:/Program Files/CMake/share/cmake-3.26/Modules/FindPackageMessage.cmake
+D:/Program Files/CMake/share/cmake-3.26/Modules/FindPkgConfig.cmake
+D:/Program Files/CMake/share/cmake-3.26/Modules/Platform/Windows-MSVC-C.cmake
+D:/Program Files/CMake/share/cmake-3.26/Modules/Platform/Windows-MSVC-CXX.cmake
+D:/Program Files/CMake/share/cmake-3.26/Modules/Platform/Windows-MSVC.cmake
+D:/Program Files/CMake/share/cmake-3.26/Modules/Platform/Windows.cmake
+D:/Program Files/CMake/share/cmake-3.26/Modules/Platform/WindowsPaths.cmake
+D:/Program Files/CMake/share/cmake-3.26/Modules/WriteBasicConfigVersionFile.cmake
