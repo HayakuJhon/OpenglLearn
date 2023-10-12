@@ -231,7 +231,7 @@ void cursorPosCallback(GLFWwindow* window, double posX, double posY) {
 }
 
 void scrollCallback(GLFWwindow* window, double offsetX, double offsetY) {
-	InputUtils::scrollCallback(window, &camera, offsetX, offsetY);
+	InputUtils::scrollCallback(window, camera, offsetX, offsetY);
 }
 
 void showMyImGui() {
