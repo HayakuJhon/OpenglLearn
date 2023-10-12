@@ -20,9 +20,11 @@ find_package(GLM REQUIRED)
 message(STATUS "GLM included at ${GLM_INCLUDE_DIR}")
 find_package(GLFW3 REQUIRED)
 message(STATUS "Found GLFW3 in ${GLFW3_INCLUDE_DIR}")
+find_package(ASSIMP REQUIRED)
+message(STATUS "Found ASSIMP in ${ASSIMP_INCLUDE_DIR}")
 
 if(WIN32)
-  set(LIBS glfw3 opengl32)
+  set(LIBS glfw3 opengl32 assimp-vc143-mt)
   add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 elseif(UNIX AND NOT APPLE)
   set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall")
@@ -50,6 +52,7 @@ endif(WIN32)
 set(CHAPTERS
     1.getting_started
     2.lighting
+    3.model_loading
 )
 
 set(1.getting_started
@@ -76,6 +79,10 @@ set(2.lighting
     6.1.multiple_lights
 )
 
+set(3.model_loading
+    1.model_loading
+)
+
 
 
 #if (CMAKE_VERSION VERSION_GREATER 3.12)
@@ -92,14 +99,14 @@ set(LIBS ${LIBS} GLAD)
 
 
 
-file(GLOB IMGUI_SRCS
+file(GLOB_RECURSE IMGUI_SRCS
     ${CMAKE_SOURCE_DIR}/src/imgui/*.cpp)
-foreach(TEMP_PATH ${IMGUI_SRCS})
-    string(REPLACE "${CMAKE_SOURCE_DIR}/" "" rel_path ${TEMP_PATH})
-    list(APPEND REL_IMGUI_PATH ${rel_path})
-endforeach()
+#foreach(TEMP_PATH ${IMGUI_SRCS})
+#    string(REPLACE "${CMAKE_SOURCE_DIR}/" "" rel_path ${TEMP_PATH})
+#    list(APPEND REL_IMGUI_PATH ${rel_path})
+#endforeach()
 
-add_library(IMGUI ${REL_IMGUI_PATH})
+add_library(IMGUI ${IMGUI_SRCS})
 #add_library(IMGUI "src/imgui/imgui.cpp" "src/imgui/imgui_demo.cpp" "src/imgui/imgui_draw.cpp" "src/imgui/imgui_impl_glfw.cpp" "src/imgui/imgui_impl_opengl3.cpp" "src/imgui/imgui_tables.cpp" "src/imgui/imgui_widgets.cpp")
 set(LIBS ${LIBS} IMGUI)
 
@@ -162,7 +169,7 @@ function(create_project_from_sources chapter demo)
             # configure_file(${SHADER} "test")
             message(STATUS "==========================${NAME}--${CMAKE_COMMAND}--${SHADER}---$<TARGET_FILE_DIR:${NAME}>")
             add_custom_command(TARGET ${NAME} PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy ${SHADER} $<TARGET_FILE_DIR:${NAME}>)
-			#add_custom_command(TARGET ${NAME} PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy ${DLLS} $<TARGET_FILE_DIR:${NAME}>)
+			add_custom_command(TARGET ${NAME} PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy ${DLLS} $<TARGET_FILE_DIR:${NAME}>)
         elseif(UNIX AND NOT APPLE)
             file(COPY ${SHADER} DESTINATION ${CMAKE_SOURCE_DIR}/bin/${chapter})
         elseif(APPLE)
