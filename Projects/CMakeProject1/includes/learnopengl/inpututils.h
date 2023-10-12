@@ -80,8 +80,8 @@ public:
 		//std::cout << "x:" << camera.Front.x << ",y:" << camera.Front.y << ",z:" << camera.Front.z << std::endl;
 	}
 
-	static void scrollCallback(GLFWwindow* window, Camera* camera, double offsetX, double offsetY) {
-		(*camera).ProcessMouseScroll(offsetY);
+	static void scrollCallback(GLFWwindow* window, Camera& camera, double offsetX, double offsetY) {
+		camera.ProcessMouseScroll(offsetY);
 	}
 
 	static void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
