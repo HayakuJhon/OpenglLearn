@@ -9,6 +9,7 @@
 #include <learnopengl/shader_s.h>
 #include <learnopengl/camera.h>
 #include <learnopengl/model.h>
+#include <learnopengl/light.h>
 
 #include <iostream>
 
@@ -32,6 +33,7 @@ float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
 glm::vec3 lightPos = glm::vec3();
+DirectionLight light = DirectionLight(glm::vec3(0.0f, -1.0f, 1.0f));
 
 int main()
 {
@@ -117,6 +119,9 @@ int main()
         glm::mat4 view = camera.GetViewMatrix();
         ourShader.setMat4("projection", projection);
         ourShader.setMat4("view", view);
+        ourShader.setVec3("light.direction", light.Direction);
+        ourShader.setVec4("light.specular", light.Specular);
+        ourShader.setVec3("viewDir", camera.Front);
 
         // render the loaded model
         glm::mat4 model = glm::mat4(1.0f);
