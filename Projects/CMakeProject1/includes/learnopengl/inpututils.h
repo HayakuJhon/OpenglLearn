@@ -22,6 +22,31 @@ public:
 		deltaTime = time - lastTime;
 		lastTime = time;
 		if (ImGui::GetIO().WantCaptureKeyboard) return;
+		inputProcess(window, camera);
+		if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
+			lightPos.z -= 0.1f;
+		}
+		if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
+			lightPos.z += 0.1f;
+		}
+		if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
+			lightPos.x -= 0.1f;
+		}
+		if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
+			lightPos.x += 0.1f;
+		}
+		if (glfwGetKey(window, GLFW_KEY_RIGHT_SHIFT) == GLFW_PRESS) {
+			lightPos.y += 0.1f;
+		}
+		if (glfwGetKey(window, GLFW_KEY_RIGHT_CONTROL) == GLFW_PRESS) {
+			lightPos.y -= 0.1f;
+		}
+	}
+	static void inputProcess(GLFWwindow* window, Camera& camera) {
+		float time = glfwGetTime();
+		deltaTime = time - lastTime;
+		lastTime = time;
+		if (ImGui::GetIO().WantCaptureKeyboard) return;
 		if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 			glfwSetWindowShouldClose(window, true);
 		}
@@ -42,24 +67,6 @@ public:
 		}
 		if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS) {
 			camera.ProcessKeyboard(DOWN, deltaTime);
-		}
-		if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
-			lightPos.z -= 0.1f;
-		}
-		if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
-			lightPos.z += 0.1f;
-		}
-		if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
-			lightPos.x -= 0.1f;
-		}
-		if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
-			lightPos.x += 0.1f;
-		}
-		if (glfwGetKey(window, GLFW_KEY_RIGHT_SHIFT) == GLFW_PRESS) {
-			lightPos.y += 0.1f;
-		}
-		if (glfwGetKey(window, GLFW_KEY_RIGHT_CONTROL) == GLFW_PRESS) {
-			lightPos.y -= 0.1f;
 		}
 	}
 	static void cursorPosCallback(GLFWwindow* window, Camera& camera, double posX, double posY) {
