@@ -43,7 +43,7 @@ int main() {
 	}
 
 	glEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_ALWAYS);
+	glDepthFunc(GL_LESS);
 
     //imgui
     IMGUI_CHECKVERSION();
@@ -61,7 +61,7 @@ int main() {
 
     stbi_set_flip_vertically_on_load(true);
 
-	Shader shader("1.1.depth_testing.vs","1.1.depth_testing.fs");
+    Shader shader("1.1.depth_testing.vs", "1.1.depth_testing.fs");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
@@ -171,7 +171,7 @@ int main() {
         glBindVertexArray(cubeVAO);
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, cubeTexture);
-        model = glm::translate(model, glm::vec3(-1.0f, 0.0f, -1.0f));
+        model = glm::translate(model, glm::vec3(-1.0f, 0.0001f, -1.0f));
         shader.setMat4("model", model);
         glDrawArrays(GL_TRIANGLES, 0, 36);
         
