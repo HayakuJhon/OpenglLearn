@@ -86,6 +86,7 @@ set(3.model_loading
 
 set(4.advanced_opengl
     1.1depth_testing
+    2.stencil_testing
 )
 
 
